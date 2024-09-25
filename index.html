@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>8-Queens Solver</title>
+    <style>
+        .board { display: grid; grid-template-columns: repeat(8, 50px); }
+        .cell { width: 50px; height: 50px; border: 1px solid #000; display: flex; justify-content: center; align-items: center; }
+        .queen { background-color: yellow; }
+    </style>
+</head>
+<body>
+    <h1>8-Queens Solver</h1>
+    <button onclick="solveQueens()">Solve 8-Queens</button>
+    <div id="board" class="board"></div>
+
+    <script>
+        function solveQueens() {
+            fetch('/solve')
+                .then(response => response.json())
+                .then(state => displayBoard(state))
+                .catch(error => console.log('Error:', error));
+        }
+
+        function displayBoard(state) {
+            const board = document.getElementById('board');
+            board.innerHTML = ''; // Clear the board
+            for (let row = 0; row < 8; row++) {
+                for (let col = 0; col < 8; col++) {
+                    const cell = document.createElement('div');
+                    cell.classList.add('cell');
+                    if (state[col] === row) {
+                        cell.classList.add('queen');
+                        cell.innerHTML = 'Q';
+                    }
+                    board.appendChild(cell);
+                }
+            }
+        }
+    </script>
+</body>
+</html>
